@@ -1,35 +1,45 @@
-class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        result = []
-        nums.sort()
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result;
+        int n = nums.size();
 
-        for i in range(len(nums) - 2):
-            # Skip duplicate triplets with the same first element
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue
+        // Sorting the array
+        sort(nums.begin(), nums.end());
 
-            target = -nums[i]
-            left, right = i + 1, len(nums) - 1
+        for (int i = 0; i < n - 2; ++i) {
+            // Skip duplicate triplets with the same first element
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
 
-            while left < right:
-                current_sum = nums[left] + nums[right]
+            int target = -nums[i];
+            int left = i + 1;
+            int right = n - 1;
 
-                if current_sum == target:
-                    result.append([nums[i], nums[left], nums[right]])
+            while (left < right) {
+                int current_sum = nums[left] + nums[right];
 
-                    # Skip duplicate triplets with the same second element
-                    while left < right and nums[left] == nums[left + 1]:
-                        left += 1
+                if (current_sum == target) {
+                    result.push_back({nums[i], nums[left], nums[right]});
 
-                    # Skip duplicate triplets with the same third element
-                    while left < right and nums[right] == nums[right - 1]:
-                        right -= 1
+                    // Skip duplicate triplets with the same second element
+                    while (left < right && nums[left] == nums[left + 1])
+                        left++;
 
-                    left += 1
-                    right -= 1
-                elif current_sum < target:
-                    left += 1
-                else:
-                    right -= 1
+                    // Skip duplicate triplets with the same third element
+                    while (left < right && nums[right] == nums[right - 1])
+                        right--;
 
-        return result
+                    left++;
+                    right--;
+                } else if (current_sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
+        return result;
+    }
+};
